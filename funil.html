@@ -1,0 +1,839 @@
+<title>Antes de Implorar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Instrument+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ink:#1A1319;
+  --night:#241B25;
+  --night-2:#2E2330;
+  --line:#3A2C3C;
+  --linen:#F6EDE9;
+  --muted:#B9A5B4;
+  --blush:#E6B0B5;
+  --ember:#C05A6B;
+  --dawn:#E0A878;
+  --p:0;
+  --w:min(100%,34rem);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--linen);
+  font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:1.0625rem;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ── Signature: the night-to-dawn ground, driven by --p ───────── */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:
+    radial-gradient(130% 70% at 50% 112%,
+      rgba(230,176,181,calc(.42 * var(--p))) 0%,
+      rgba(224,168,120,calc(.20 * var(--p))) 38%,
+      transparent 68%),
+    linear-gradient(176deg,#150F14 0%,var(--ink) 42%,#221A23 100%);
+  transition:background 1.1s cubic-bezier(.4,0,.2,1);
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.5;
+  background-image:radial-gradient(rgba(246,237,233,.05) 1px,transparent 1px);
+  background-size:3px 3px;
+}
+
+.wrap{
+  width:var(--w);
+  margin-inline:auto;
+  padding-inline:1.25rem;
+  padding-block:0;
+}
+
+/* ── Type scale ───────────────────────────────────────────────── */
+h1,h2,h3{
+  font-family:Fraunces,Georgia,"Times New Roman",serif;
+  font-variation-settings:"SOFT" 40,"WONK" 1;
+  font-weight:500;
+  line-height:1.12;
+  letter-spacing:-.015em;
+  text-wrap:balance;
+  margin:0;
+}
+h1{font-size:clamp(2rem,8.5vw,2.85rem)}
+h2{font-size:clamp(1.5rem,6vw,2rem)}
+h3{font-size:1.1875rem;line-height:1.25}
+p{margin:0}
+
+.eyebrow{
+  font-size:.6875rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--blush);
+  font-weight:600;
+}
+.lede{color:var(--muted);font-size:1.0625rem}
+.fine{font-size:.8125rem;color:#8E7C8B;line-height:1.55}
+
+em{font-style:italic;color:var(--blush);font-variation-settings:"SOFT" 60}
+
+/* ── Controls ─────────────────────────────────────────────────── */
+.btn{
+  display:block;
+  width:100%;
+  min-height:3.5rem;
+  padding:1rem 1.25rem;
+  border:0;
+  border-radius:2rem;
+  background:linear-gradient(135deg,var(--ember),#A8455C);
+  color:#FFF6F3;
+  font-family:inherit;
+  font-size:1.0625rem;
+  font-weight:600;
+  letter-spacing:.005em;
+  cursor:pointer;
+  box-shadow:0 .75rem 2rem -.75rem rgba(192,90,107,.75);
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 1rem 2.5rem -.75rem rgba(192,90,107,.9)}
+.btn:active{transform:translateY(0)}
+
+.btn-ghost{
+  background:none;
+  border:1px solid var(--line);
+  color:var(--muted);
+  box-shadow:none;
+  min-height:2.75rem;
+  font-size:.9375rem;
+  font-weight:500;
+  padding:.625rem 1rem;
+  border-radius:1.5rem;
+  width:auto;
+  margin-inline:auto;
+  cursor:pointer;
+  font-family:inherit;
+}
+.btn-ghost:hover{border-color:var(--blush);color:var(--blush);transform:none;box-shadow:none}
+
+a{color:var(--blush)}
+:focus-visible{outline:2px solid var(--blush);outline-offset:3px;border-radius:.5rem}
+
+/* ── Screens ──────────────────────────────────────────────────── */
+.screen{display:flex;flex-direction:column;gap:1.5rem;padding-block:3.5rem 4rem}
+.screen[hidden]{display:none!important}
+
+/* ── Intro ────────────────────────────────────────────────────── */
+.intro-mark{
+  width:2.5rem;height:2.5rem;
+  border-radius:50%;
+  border:1px solid var(--line);
+  display:grid;place-items:center;
+  color:var(--blush);
+  font-family:Fraunces,serif;
+  font-size:1.125rem;
+  font-variation-settings:"SOFT" 80,"WONK" 1;
+}
+.intro-points{
+  display:flex;flex-direction:column;gap:.875rem;
+  padding:1.25rem;
+  border-radius:1rem;
+  background:rgba(36,27,37,.62);
+  border:1px solid var(--line);
+}
+.intro-point{display:flex;gap:.75rem;align-items:flex-start;font-size:.9375rem;color:var(--muted)}
+.intro-point b{color:var(--linen);font-weight:600}
+.tick{color:var(--blush);flex:none;line-height:1.6}
+
+/* ── Quiz ─────────────────────────────────────────────────────── */
+.meter{display:flex;flex-direction:column;gap:.625rem}
+.meter-track{height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.meter-fill{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--ember),var(--blush) 60%,var(--dawn));
+  border-radius:2px;
+  transition:width .45s cubic-bezier(.4,0,.2,1);
+}
+.meter-label{
+  display:flex;justify-content:space-between;
+  font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;
+  color:#8E7C8B;font-weight:600;
+}
+
+.q{display:flex;flex-direction:column;gap:1.5rem;animation:rise .45s cubic-bezier(.16,1,.3,1)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.opts{display:flex;flex-direction:column;gap:.625rem}
+.opt{
+  display:block;width:100%;text-align:left;
+  min-height:3.25rem;
+  padding:.9375rem 1.0625rem;
+  border-radius:.875rem;
+  border:1px solid var(--line);
+  background:rgba(36,27,37,.55);
+  color:var(--linen);
+  font-family:inherit;font-size:.9375rem;line-height:1.45;
+  cursor:pointer;
+  transition:border-color .16s ease,background .16s ease,transform .12s ease;
+}
+.opt:hover{border-color:var(--blush);background:rgba(58,44,60,.65)}
+.opt:active{transform:scale(.99)}
+
+.q-back{
+  align-self:flex-start;
+  background:none;border:0;padding:.5rem .125rem;
+  color:#8E7C8B;font-family:inherit;font-size:.875rem;cursor:pointer;
+}
+.q-back:hover{color:var(--blush)}
+.q-back[hidden]{display:none!important}
+
+/* ── Result ───────────────────────────────────────────────────── */
+.result-card{
+  padding:1.75rem 1.5rem;
+  border-radius:1.25rem;
+  background:linear-gradient(165deg,rgba(46,35,48,.92),rgba(26,19,25,.92));
+  border:1px solid var(--line);
+  border-top:2px solid var(--dawn);
+  display:flex;flex-direction:column;gap:1rem;
+  animation:bloom .8s cubic-bezier(.16,1,.3,1);
+}
+@keyframes bloom{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:none}}
+
+.result-name{color:var(--dawn);font-variation-settings:"SOFT" 70,"WONK" 1}
+
+.costs{display:flex;flex-direction:column;gap:.75rem;margin:0;padding:0;list-style:none}
+.costs li{
+  display:flex;gap:.75rem;align-items:flex-start;
+  font-size:.9375rem;color:var(--muted);line-height:1.5;
+}
+.costs li::before{
+  content:"";flex:none;
+  width:.375rem;height:.375rem;margin-top:.5rem;
+  border-radius:50%;background:var(--ember);
+}
+
+.pivot{
+  padding:1.25rem;
+  border-left:2px solid var(--blush);
+  background:rgba(230,176,181,.06);
+  border-radius:0 .75rem .75rem 0;
+  font-size:1rem;
+  line-height:1.6;
+}
+
+/* ── VSL ──────────────────────────────────────────────────────── */
+.vsl-frame{
+  position:relative;
+  aspect-ratio:9/16;
+  max-width:100%;
+  max-height:70vh;
+  margin-inline:auto;
+  width:100%;
+  border-radius:1rem;
+  overflow:hidden;
+  background:var(--night);
+  border:1px solid var(--line);
+}
+.vsl-frame iframe,.vsl-frame video{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.vsl-empty{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;gap:.625rem;
+  align-items:center;justify-content:center;
+  padding:1.5rem;text-align:center;
+  color:#8E7C8B;
+}
+.vsl-empty svg{color:var(--ember)}
+.vsl-empty code{
+  font-family:ui-monospace,"SF Mono",Menlo,monospace;
+  font-size:.75rem;color:var(--blush);
+  background:rgba(230,176,181,.08);
+  padding:.125rem .375rem;border-radius:.25rem;
+}
+
+/* ── Offer ────────────────────────────────────────────────────── */
+.modules{display:flex;flex-direction:column;gap:0;counter-reset:wk}
+.module{
+  display:grid;
+  grid-template-columns:2.75rem 1fr;
+  gap:1rem;
+  padding-block:1.125rem;
+  border-bottom:1px solid var(--line);
+}
+.module:last-child{border-bottom:0}
+.module-wk{
+  font-family:Fraunces,serif;
+  font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ember);font-weight:600;padding-top:.1875rem;
+}
+.module h3{margin-bottom:.25rem}
+.module p{font-size:.875rem;color:var(--muted);line-height:1.5}
+
+.price-box{
+  padding:1.75rem 1.5rem;
+  border-radius:1.25rem;
+  background:linear-gradient(165deg,rgba(192,90,107,.16),rgba(36,27,37,.9));
+  border:1px solid rgba(230,176,181,.35);
+  display:flex;flex-direction:column;gap:1.125rem;
+  text-align:center;
+}
+.price-num{
+  font-family:Fraunces,serif;
+  font-size:2.75rem;line-height:1;
+  font-variation-settings:"SOFT" 30;
+  color:var(--linen);
+}
+.price-num span{font-size:1.125rem;color:var(--muted);font-family:"Instrument Sans",sans-serif}
+
+.cta-slot{display:flex;flex-direction:column;gap:.75rem}
+.cta-locked{
+  display:flex;gap:.625rem;align-items:center;justify-content:center;
+  min-height:3.5rem;padding:1rem;
+  border-radius:2rem;border:1px dashed var(--line);
+  color:#8E7C8B;font-size:.9375rem;
+}
+.cta-locked[hidden],.btn[hidden]{display:none!important}
+.pulse{width:.5rem;height:.5rem;border-radius:50%;background:var(--ember);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+
+/* ── FAQ ──────────────────────────────────────────────────────── */
+.faq{display:flex;flex-direction:column}
+details{border-bottom:1px solid var(--line)}
+summary{
+  padding:1.0625rem 2rem 1.0625rem 0;
+  cursor:pointer;list-style:none;position:relative;
+  font-weight:500;font-size:.9375rem;line-height:1.45;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{
+  content:"+";position:absolute;right:.25rem;top:50%;
+  transform:translateY(-50%);
+  color:var(--ember);font-size:1.25rem;line-height:1;
+}
+details[open] summary::after{content:"–"}
+details p{padding-bottom:1.0625rem;font-size:.9375rem;color:var(--muted);line-height:1.6}
+
+/* ── Footer ───────────────────────────────────────────────────── */
+.foot{
+  border-top:1px solid var(--line);
+  padding-block:1.75rem 2.5rem;
+  display:flex;flex-direction:column;gap:.875rem;
+}
+.safety{
+  padding:.9375rem 1.0625rem;
+  border-radius:.75rem;
+  background:rgba(36,27,37,.6);
+  border:1px solid var(--line);
+  font-size:.8125rem;line-height:1.55;color:var(--muted);
+}
+.safety b{color:var(--linen);font-weight:600}
+
+hr.rule{border:0;border-top:1px solid var(--line);margin:0}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+
+<div class="wrap">
+
+  <!-- ══ 1. INTRO ═══════════════════════════════════════════════ -->
+  <section class="screen" id="s-intro">
+    <div class="intro-mark">✦</div>
+    <p class="eyebrow">Quiz · 2 minutos</p>
+    <h1>Por que você continua num lugar onde precisa <em>implorar</em> pra ser vista?</h1>
+    <p class="lede">
+      Não é falta de amor. É um padrão — e ele tem nome. Sete perguntas pra
+      você enxergar qual é o seu.
+    </p>
+
+    <div class="intro-points">
+      <div class="intro-point"><span class="tick">—</span><span>Não tem resposta certa. <b>Tem resposta sua.</b></span></div>
+      <div class="intro-point"><span class="tick">—</span><span>Suas respostas <b>não saem do seu celular.</b> Nada é enviado, nada é salvo.</span></div>
+      <div class="intro-point"><span class="tick">—</span><span>No fim, você recebe a <b>leitura do seu perfil</b> e o que fazer com ela.</span></div>
+    </div>
+
+    <button class="btn" id="start">Começar o quiz</button>
+    <p class="fine" style="text-align:center">Leva menos de 2 minutos.</p>
+  </section>
+
+  <!-- ══ 2. QUIZ ════════════════════════════════════════════════ -->
+  <section class="screen" id="s-quiz" hidden>
+    <div class="meter">
+      <div class="meter-label">
+        <span id="m-count">Pergunta 1 de 7</span>
+        <span id="m-pct">14%</span>
+      </div>
+      <div class="meter-track"><div class="meter-fill" id="m-fill"></div></div>
+    </div>
+    <div id="q-mount" aria-live="polite"></div>
+    <button class="q-back" id="q-back" hidden>← Voltar</button>
+  </section>
+
+  <!-- ══ 3. RESULT ══════════════════════════════════════════════ -->
+  <section class="screen" id="s-result" hidden>
+    <p class="eyebrow">Seu resultado</p>
+
+    <div class="result-card">
+      <h2 class="result-name" id="r-name"></h2>
+      <p class="lede" id="r-line"></p>
+      <hr class="rule">
+      <p id="r-body-1"></p>
+      <p id="r-body-2"></p>
+    </div>
+
+    <h3>O que esse padrão te custa</h3>
+    <ul class="costs" id="r-costs"></ul>
+
+    <div class="pivot" id="r-pivot"></div>
+
+    <button class="btn" id="to-vsl">Ver o que fazer com isso</button>
+  </section>
+
+  <!-- ══ 4. VSL + OFFER ═════════════════════════════════════════ -->
+  <section class="screen" id="s-offer" hidden>
+    <p class="eyebrow">Assista antes de decidir</p>
+    <h2 id="o-head">Como sair desse padrão sem esperar que ele mude primeiro</h2>
+    <p class="lede">
+      São alguns minutos. Se você chegou até aqui, vale mais a pena que
+      qualquer coisa que você ia fazer agora no celular.
+    </p>
+
+    <div class="vsl-frame" id="vsl-frame">
+      <div class="vsl-empty">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2"/>
+        </svg>
+        <p style="font-size:.875rem;margin:0">Espaço reservado para a VSL</p>
+        <p class="fine" style="margin:0">Cole o embed em <code>CONFIG.vslEmbed</code></p>
+      </div>
+    </div>
+
+    <h3>O que tem dentro do guia</h3>
+    <div class="modules" id="modules"></div>
+
+    <div class="price-box">
+      <p class="eyebrow" style="color:var(--dawn)">Acesso imediato</p>
+      <p class="price-num" id="price"><span>R$</span> —</p>
+      <p class="fine" style="margin:0">Pagamento único. Acesso vitalício, no seu celular.</p>
+
+      <div class="cta-slot">
+        <div class="cta-locked" id="cta-locked">
+          <span class="pulse"></span><span id="cta-wait">Continue assistindo</span>
+        </div>
+        <a class="btn" id="cta" href="#" hidden style="text-decoration:none;text-align:center">Quero começar meus 30 dias</a>
+      </div>
+
+      <p class="fine" style="margin:0">Compra segura · 7 dias de garantia</p>
+    </div>
+
+    <h3>Perguntas que toda mulher faz aqui</h3>
+    <div class="faq" id="faq"></div>
+
+    <footer class="foot">
+      <div class="safety">
+        <b>Um recado honesto.</b> Este guia é material de desenvolvimento pessoal —
+        não é terapia e não substitui acompanhamento profissional. Se o que você
+        vive envolve agressão, ameaça ou medo de estar em casa, isso não é um
+        padrão a trabalhar sozinha: ligue <b>180</b> (Central de Atendimento à
+        Mulher, gratuito e sigiloso, 24h).
+      </div>
+      <p class="fine" id="legal"></p>
+    </footer>
+  </section>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   CONFIGURAÇÃO — edite só esta parte para publicar
+   ═══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  // Link do checkout (Cakto). Cole o link completo aqui.
+  checkoutUrl: "https://pay.cakto.com.br/SEU-LINK-AQUI",
+
+  // Embed da VSL. Cole a tag <iframe> (Bunny, Panda, Vimeo) ou <video> inteira.
+  // MP4 direto do R2/Bunny:
+  //   `<video src="https://video.seudominio.com.br/vsl.mp4" controls playsinline
+  //           preload="metadata" poster="capa.jpg"></video>`
+  vslEmbed: "",
+
+  // Segundos até o botão de compra aparecer. 0 = aparece na hora.
+  ctaDelay: 180,
+
+  // Preço exibido.
+  price: "47",
+
+  // Nome que assina o rodapé.
+  brand: "Bianca Leão",
+
+  /* ─── Rastreamento (opcional — deixe vazio pra desligar) ─────
+     Nada disso funciona na pré-visualização aqui do Claude: só no
+     domínio publicado. Se testar aqui e não ver evento, é isso. */
+
+  // ID do pixel do TikTok (Ads Manager → Ferramentas → Eventos → Web).
+  // Vazio = pixel não carrega.
+  tiktokPixelId: "",
+
+  // Repassa utm_source, utm_medium, utm_campaign, utm_content, utm_term,
+  // ttclid e click_id da URL de entrada pro link do checkout.
+  // É isso que faz a UTMify (ou a própria Cakto) saber de onde veio a venda.
+  forwardUtms: true,
+};
+/* ═══════════════════════════════════════════════════════════════ */
+
+const QUESTIONS = [
+  {
+    q: "Depois de uma discussão séria, o que costuma acontecer?",
+    o: [
+      ["Eu peço desculpa primeiro, mesmo quando não fui eu", {anula:3}],
+      ["Fico remoendo, tentando achar o que eu fiz de errado", {anula:2, vigia:1}],
+      ["Eu engulo e fico quieta, porque falar não adianta", {insiste:2, anula:1}],
+      ["Eu falo o que sinto, mas parece que cai no vazio", {insiste:3}],
+    ],
+  },
+  {
+    q: "Com que frequência você confere o celular dele, as redes ou os horários?",
+    o: [
+      ["Quase todo dia. Eu preciso saber.", {vigia:3}],
+      ["Quando alguma coisa me dá um nó no estômago", {vigia:2}],
+      ["Já fiz muito. Hoje evito, porque me destrói.", {vigia:1, acorda:2}],
+      ["Não confiro — mas também não me sinto segura", {insiste:2}],
+    ],
+  },
+  {
+    q: "Quando você pede algo pra você — tempo, atenção, carinho — como se sente?",
+    o: [
+      ["Culpada, como se estivesse pedindo demais", {anula:3}],
+      ["Com medo da resposta dele", {vigia:2, anula:1}],
+      ["Cansada de ter que pedir toda vez", {insiste:3}],
+      ["Eu quase não peço mais", {anula:2, acorda:1}],
+    ],
+  },
+  {
+    q: "Ele demora a responder. O que passa na sua cabeça?",
+    o: [
+      ["Imagino o pior e fico presa nisso", {vigia:3}],
+      ["Fico irritada, mas não falo nada", {insiste:2, anula:1}],
+      ["Penso que eu não sou prioridade", {anula:2, insiste:1}],
+      ["Tento me distrair, mas o dia inteiro trava", {vigia:2, anula:1}],
+    ],
+  },
+  {
+    q: "Pensa no último mês. Quanto do seu tempo foi pra algo que era só seu?",
+    o: [
+      ["Praticamente nada", {anula:3}],
+      ["Umas poucas horas, contadas", {anula:2}],
+      ["Comecei a retomar umas coisas minhas", {acorda:3}],
+      ["Tenho minhas coisas, mas a cabeça fica nele", {vigia:2, insiste:1}],
+    ],
+  },
+  {
+    q: "Quando ele elogia outra mulher, ou você vê uma curtida que incomoda:",
+    o: [
+      ["Eu me comparo na hora e me sinto menor", {anula:3}],
+      ["Eu investigo. Preciso saber quem é.", {vigia:3}],
+      ["Eu me esforço mais ainda pra ele me notar", {insiste:3}],
+      ["Eu sinto, mas já não me arrasa como antes", {acorda:3}],
+    ],
+  },
+  {
+    q: "Se daqui a 6 meses estivesse tudo exatamente igual, o que você faria?",
+    o: [
+      ["Continuaria. Não sei viver de outro jeito.", {anula:3}],
+      ["Não sei — e é isso que me assusta", {vigia:2, anula:1}],
+      ["Eu não aguentaria. Mas não sei o primeiro passo.", {acorda:2, insiste:1}],
+      ["Eu já decidi que não vou seguir assim", {acorda:3}],
+    ],
+  },
+];
+
+const PROFILES = {
+  anula: {
+    name: "A que aprendeu a ocupar pouco espaço",
+    line: "Você virou fácil de conviver. E foi ficando invisível.",
+    b1: "Em algum momento você entendeu — sem ninguém te ensinar em voz alta — que ser leve, não dar trabalho e não cobrar era o jeito de continuar sendo amada. Então você foi diminuindo. Um pedido a menos aqui, uma vontade engolida ali.",
+    b2: "O problema é que ninguém valoriza o que não custa nada. Quanto menos você pede, menos ele percebe que existe algo a perder. Não é que ele parou de te amar: é que você parou de aparecer.",
+    costs: [
+      "Você pede desculpa por coisas que não fez, só pra encerrar o assunto",
+      "Você já não sabe dizer o que quer — só o que ele não quer",
+      "Você chama de paz o que na verdade é silêncio",
+    ],
+    pivot: "A virada não é brigar mais. É voltar a ocupar espaço sem pedir licença — e é exatamente isso que muda o jeito como ele te enxerga.",
+  },
+  vigia: {
+    name: "A que não consegue desligar a cabeça",
+    line: "Você não está com ciúme. Você está exausta.",
+    b1: "Você já decorou o horário que ele costuma responder. Já sabe reconhecer o tipo de silêncio dele. Já conferiu coisas que preferia não ter conferido. E a cada vez que você procura, encontra algo que alimenta o ciclo — mesmo quando não tem nada.",
+    b2: "Isso não é desconfiança à toa: é o seu corpo tentando prever a próxima dor pra não ser pega de surpresa de novo. Só que vigiar nunca trouxe segurança pra ninguém. Só trouxe cansaço.",
+    costs: [
+      "Sua energia vai embora numa investigação que nunca termina",
+      "Você está presente no corpo, mas a cabeça fica no celular dele",
+      "Você virou detetive da vida dele e perdeu o rumo da sua",
+    ],
+    pivot: "A segurança que você procura no celular dele não está lá. Ela se constrói em outro lugar — e sem ela, nenhuma prova que ele der vai ser suficiente.",
+  },
+  insiste: {
+    name: "A que carrega o relacionamento sozinha",
+    line: "Você virou a única adulta da relação.",
+    b1: "Você lembra das datas, resolve os problemas, puxa as conversas difíceis, segura a casa e ainda tem energia pra tentar consertar o clima quando ele chega mal. Você faz a parte dele e a sua — e chama isso de amor.",
+    b2: "Só que quem carrega tudo sozinha cria alguém que não precisa carregar nada. Você não está construindo um casamento: está sustentando um. E por baixo do cansaço tem um ressentimento que você ainda não deixou virar palavra.",
+    costs: [
+      "Você se sente mãe dele, e mãe não deseja — mãe cuida",
+      "Você faz mais e recebe menos, e ainda acha que é falta de esforço seu",
+      "Quando você para, tudo desmonta — e isso te prende",
+    ],
+    pivot: "Parar de carregar não é desistir. É devolver o peso pra quem também deveria estar segurando — e descobrir o que sobra de você quando você para de se esfolar.",
+  },
+  acorda: {
+    name: "A que já sabe, e está na beirada",
+    line: "Você não precisa de mais um sinal. Você já teve todos.",
+    b1: "Diferente de muita mulher que chega aqui, você já enxergou. Já entendeu que ficar esperando ele mudar é uma espera sem prazo. Já sentiu aquele cansaço específico de quem cansou de explicar a mesma coisa.",
+    b2: "O que trava você agora não é falta de clareza — é falta de método. Você sabe que precisa se reposicionar, mas não sabe qual é o primeiro passo na segunda-feira de manhã, com as contas, os filhos e ele dormindo do lado.",
+    costs: [
+      "Você entende tudo, mas os dias continuam exatamente iguais",
+      "A clareza sem plano vira só uma angústia mais informada",
+      "Cada mês que passa, você se acostuma um pouco mais",
+    ],
+    pivot: "Você não precisa ser convencida. Precisa de um caminho com dia, hora e primeiro passo — porque entender já não está te tirando do lugar.",
+  },
+};
+
+const MODULES = [
+  ["Semana 1", "Parar de sangrar", "Os três hábitos que mantêm você presa no ciclo — e como interromper cada um sem dar um ultimato que você não vai cumprir."],
+  ["Semana 2", "Devolver o peso", "O que é seu, o que é dele e o que vocês dois largaram no meio. Como parar de fazer a parte dele sem a casa desabar."],
+  ["Semana 3", "Reocupar espaço", "Voltar a ter vontade, opinião e agenda própria. É aqui que a maioria das mulheres começa a ser tratada diferente — porque ela está diferente."],
+  ["Semana 4", "Decidir de pé", "Com a cabeça no lugar, você escolhe: reconstruir ou sair. As duas decisões são válidas. Nenhuma se toma do chão do banheiro."],
+];
+
+const FAQ = [
+  ["Isso é terapia?",
+   "Não. É um guia prático de 30 dias, com exercícios pra você fazer sozinha. Ele não substitui terapia — e se você já faz, os dois funcionam bem juntos."],
+  ["Funciona mesmo se ele não mudar?",
+   "O trabalho aqui é sobre você: sua clareza, seus limites, seu lugar. Muita mulher relata que o comportamento do parceiro muda quando ela muda — mas isso é consequência, não é o que eu garanto. O que o guia entrega é você sair do chão, com ele ou sem ele."],
+  ["Quanto tempo eu preciso por dia?",
+   "Cerca de 15 minutos. É feito pra caber num dia real, com trabalho, casa e filhos."],
+  ["Como eu recebo?",
+   "Assim que o pagamento é confirmado, o acesso cai no seu e-mail. É digital, abre no celular e fica pra sempre com você."],
+  ["E se não for pra mim?",
+   "Você tem 7 dias pra pedir o reembolso integral, conforme o Código de Defesa do Consumidor. Sem precisar justificar."],
+];
+
+/* ─── Rastreamento ───────────────────────────────────────────── */
+function loadPixel() {
+  const id = CONFIG.tiktokPixelId.trim();
+  if (!id) return;
+  /* snippet oficial do TikTok, encurtado */
+  (function (w, d, t) {
+    w.TiktokAnalyticsObject = t;
+    const ttq = (w[t] = w[t] || []);
+    ttq.methods = ["page","track","identify","instances","debug","on","off",
+      "once","ready","alias","group","enableCookie","disableCookie"];
+    ttq.setAndDefer = function (obj, m) {
+      obj[m] = function () { obj.push([m].concat([].slice.call(arguments, 0))); };
+    };
+    ttq.methods.forEach(m => ttq.setAndDefer(ttq, m));
+    ttq.load = function (pid) {
+      const url = "https://analytics.tiktok.com/i18n/pixel/events.js";
+      ttq._i = ttq._i || {}; ttq._i[pid] = []; ttq._i[pid]._u = url;
+      ttq._t = ttq._t || {}; ttq._t[pid] = +new Date();
+      ttq._o = ttq._o || {}; ttq._o[pid] = {};
+      const s = d.createElement("script");
+      s.async = true; s.src = `${url}?sdkid=${pid}&lib=${t}`;
+      d.head.appendChild(s);
+    };
+    ttq.load(id);
+    ttq.page();
+  })(window, document, "ttq");
+}
+
+function track(event, data) {
+  try { window.ttq && window.ttq.track(event, data || {}); } catch (e) {}
+}
+
+/* Carrega os UTMs de entrada e cola no link do checkout, pra a venda
+   voltar atribuída ao vídeo que trouxe a pessoa. */
+function checkoutLink() {
+  const base = CONFIG.checkoutUrl;
+  if (!CONFIG.forwardUtms) return base;
+  const keep = ["utm_source","utm_medium","utm_campaign","utm_content",
+                "utm_term","ttclid","click_id","src","sck"];
+  const incoming = new URLSearchParams(location.search);
+  const pass = new URLSearchParams();
+  keep.forEach(k => { if (incoming.get(k)) pass.set(k, incoming.get(k)); });
+  if (![...pass].length) return base;
+  return base + (base.includes("?") ? "&" : "?") + pass.toString();
+}
+
+/* ─── Estado ─────────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+let at = 0;
+const answers = [];
+
+const show = id => {
+  ["s-intro","s-quiz","s-result","s-offer"].forEach(s => { $(s).hidden = s !== id; });
+  window.scrollTo({ top: 0, behavior: "instant" });
+};
+
+const setGlow = f => document.documentElement.style.setProperty("--p", f.toFixed(3));
+
+/* ─── Quiz ───────────────────────────────────────────────────── */
+function paintQuestion() {
+  const item = QUESTIONS[at];
+  const pct = Math.round((at / QUESTIONS.length) * 100);
+
+  $("m-count").textContent = `Pergunta ${at + 1} de ${QUESTIONS.length}`;
+  $("m-pct").textContent = `${pct}%`;
+  $("m-fill").style.width = `${pct}%`;
+  $("q-back").hidden = at === 0;
+  setGlow(at / QUESTIONS.length * 0.75);
+
+  const box = document.createElement("div");
+  box.className = "q";
+
+  const h = document.createElement("h2");
+  h.textContent = item.q;
+  box.appendChild(h);
+
+  const opts = document.createElement("div");
+  opts.className = "opts";
+  item.o.forEach(([label, weights]) => {
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.type = "button";
+    b.textContent = label;
+    b.addEventListener("click", () => {
+      answers[at] = weights;
+      at += 1;
+      at < QUESTIONS.length ? paintQuestion() : finish();
+    });
+    opts.appendChild(b);
+  });
+  box.appendChild(opts);
+
+  $("q-mount").replaceChildren(box);
+}
+
+$("q-back").addEventListener("click", () => {
+  if (at > 0) { at -= 1; paintQuestion(); }
+});
+
+/* ─── Resultado ──────────────────────────────────────────────── */
+function finish() {
+  const score = { anula: 0, vigia: 0, insiste: 0, acorda: 0 };
+  answers.forEach(w => Object.entries(w || {}).forEach(([k, v]) => { score[k] += v; }));
+
+  const key = Object.keys(score).reduce((a, b) => (score[b] > score[a] ? b : a));
+  const p = PROFILES[key];
+
+  $("r-name").textContent = p.name;
+  $("r-line").textContent = p.line;
+  $("r-body-1").textContent = p.b1;
+  $("r-body-2").textContent = p.b2;
+  $("r-pivot").textContent = p.pivot;
+
+  $("r-costs").replaceChildren(...p.costs.map(c => {
+    const li = document.createElement("li");
+    li.textContent = c;
+    return li;
+  }));
+
+  setGlow(1);
+  show("s-result");
+  track("CompleteRegistration", { content_name: `Perfil: ${key}` });
+}
+
+/* ─── Oferta ─────────────────────────────────────────────────── */
+function buildOffer() {
+  $("modules").replaceChildren(...MODULES.map(([wk, title, body]) => {
+    const row = document.createElement("div");
+    row.className = "module";
+    const n = document.createElement("div");
+    n.className = "module-wk";
+    n.textContent = wk;
+    const col = document.createElement("div");
+    const h = document.createElement("h3");
+    h.textContent = title;
+    const p = document.createElement("p");
+    p.textContent = body;
+    col.append(h, p);
+    row.append(n, col);
+    return row;
+  }));
+
+  $("faq").replaceChildren(...FAQ.map(([q, a]) => {
+    const d = document.createElement("details");
+    const s = document.createElement("summary");
+    s.textContent = q;
+    const p = document.createElement("p");
+    p.textContent = a;
+    d.append(s, p);
+    return d;
+  }));
+
+  $("price").innerHTML = `<span>R$</span> ${CONFIG.price}`;
+  $("cta").href = checkoutLink();
+  $("cta").addEventListener("click", () => {
+    track("InitiateCheckout", { value: Number(CONFIG.price), currency: "BRL" });
+  });
+  $("legal").textContent =
+    `${CONFIG.brand} · Material digital de desenvolvimento pessoal. ` +
+    `Resultados variam de pessoa para pessoa e dependem da sua aplicação. ` +
+    `Esta página não é afiliada ao TikTok.`;
+
+  if (CONFIG.vslEmbed.trim()) $("vsl-frame").innerHTML = CONFIG.vslEmbed;
+}
+
+let ctaTimer = null;
+function armCta() {
+  const locked = $("cta-locked");
+  const cta = $("cta");
+
+  if (CONFIG.ctaDelay <= 0) {
+    locked.hidden = true;
+    cta.hidden = false;
+    return;
+  }
+
+  let left = CONFIG.ctaDelay;
+  const tick = () => {
+    if (left <= 0) {
+      clearInterval(ctaTimer);
+      locked.hidden = true;
+      cta.hidden = false;
+      return;
+    }
+    const m = Math.floor(left / 60);
+    const s = String(left % 60).padStart(2, "0");
+    $("cta-wait").textContent = `Continue assistindo · ${m}:${s}`;
+    left -= 1;
+  };
+  tick();
+  ctaTimer = setInterval(tick, 1000);
+}
+
+/* ─── Navegação ──────────────────────────────────────────────── */
+$("start").addEventListener("click", () => { show("s-quiz"); paintQuestion(); });
+
+$("to-vsl").addEventListener("click", () => {
+  show("s-offer");
+  armCta();
+  track("ViewContent", { content_name: "VSL" });
+});
+
+loadPixel();
+buildOffer();
+setGlow(0);
+</script>
