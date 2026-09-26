@@ -1,4 +1,4 @@
-# Funil — Bianca Leão
+# Funil 
 
 Quiz → análise → resultado → VSL → oferta. Uma página só, sem framework, publicada como Worker com assets estáticos no Cloudflare.
 
@@ -11,7 +11,7 @@ lowticketmulheres/
     └── _headers        ← cabeçalhos de segurança e cache
 ```
 
-Todo push na `main` publica sozinho em `guia.biancaleao.com.br`.
+Todo push na `main` publica sozinho 
 
 ## Onde editar
 
