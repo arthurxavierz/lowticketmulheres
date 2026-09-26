@@ -1,6 +1,6 @@
 # Funil 
 
-Quiz → análise → resultado → VSL → oferta. Uma página só, sem framework, publicada como Worker com assets estáticos no Cloudflare.
+Quiz → análise → resultado → VSL → botão intermediário → oferta. Uma página só, sem framework, publicada como Worker com assets estáticos no Cloudflare.
 
 ```
 lowticketmulheres/
@@ -24,13 +24,21 @@ Tudo que muda no dia a dia fica no bloco `CONFIG`, no fim do `public/index.html`
 | `vsl.mp4` | Link direto do vídeo `.mp4` (R2 ou Bunny) — toca sozinho, sem som, com o aviso "toque para ouvir" |
 | `vsl.iframe` | **Ou** o código de embed inteiro do Panda / VTurb / Bunny |
 | `vsl.ratio` | `"9/16"` pra vídeo vertical, `"16/9"` pra horizontal |
-| `ctaAt` | Segundo do vídeo em que a oferta aparece (padrão 180) |
+| `ctaAt` | Fallback em segundos para embeds sem evento de fim. No `.mp4`, o botão intermediário aparece no evento real de encerramento do vídeo |
 | `hideOfferUntilCta` | `false` deixa a oferta visível desde o início |
 | `skipQuiz` | `true` abre direto no vídeo |
 | `tiktokPixelId` | ID do pixel do TikTok |
 | `testimonials` | Depoimentos reais, com autorização. Vazio = seção escondida |
 
 Textos do quiz, perfis, módulos e perguntas frequentes ficam logo abaixo, em `QUESTIONS`, `PROFILES`, `MODULES` e `FAQ`.
+
+## Fluxo da VSL
+
+Com `hideOfferUntilCta: true`, a oferta fica totalmente escondida durante a VSL. Quando o vídeo `.mp4` termina, a página mostra apenas o botão intermediário **"Quero o guia"**. Só depois desse clique aparecem preço, módulos, garantia, FAQ e os botões finais para a Cakto.
+
+Se o vídeo falhar, a oferta não é liberada. A tela mostra o erro real do navegador e tenta ler os headers do arquivo para apontar problemas como arquivo ausente, arquivo pequeno demais, `Content-Type` errado ou falta de suporte a Range.
+
+O arquivo `public/vsl.mp4` precisa ser um MP4 válido. Um placeholder vazio ou arquivo corrompido quebra principalmente em mobile. Antes de publicar, confira se ele tem tamanho real de vídeo e toca localmente.
 
 ## Cronômetro
 
@@ -53,6 +61,6 @@ Os parâmetros `utm_*`, `ttclid`, `src` e `sck` da URL de entrada são repassado
 
 ## Testar
 
-Sem vídeo configurado, aparece o link "Modo teste: liberar a oferta agora" embaixo do player. Ele some quando você coloca a VSL.
+Sem vídeo configurado, aparece o link "Modo teste: simular fim da VSL" embaixo do player. Ele mostra apenas o botão intermediário; a oferta só aparece depois do clique em "Quero o guia".
 
 Pra zerar o que ficou salvo no celular (resultado, oferta liberada, prazo do cronômetro), abra em aba anônima.
