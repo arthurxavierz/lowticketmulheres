@@ -24,6 +24,7 @@ Tudo que muda no dia a dia fica no bloco `CONFIG`, no fim do `public/index.html`
 | `vsl.mp4` | Link direto do vídeo `.mp4` (R2 ou Bunny) — toca sozinho, sem som, com o aviso "toque para ouvir" |
 | `vsl.iframe` | **Ou** o código de embed inteiro do Panda / VTurb / Bunny |
 | `vsl.ratio` | `"9/16"` pra vídeo vertical, `"16/9"` pra horizontal |
+| `earlyCheckoutAt` | Segundo em que aparece o botão opcional para avançar para a oferta interna |
 | `ctaAt` | Fallback em segundos para embeds sem evento de fim. No `.mp4`, o botão intermediário aparece no evento real de encerramento do vídeo |
 | `hideOfferUntilCta` | `false` deixa a oferta visível desde o início |
 | `skipQuiz` | `true` abre direto no vídeo |

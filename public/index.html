@@ -220,7 +220,7 @@ hr.rule{border:0;border-top:1px solid var(--line);margin:0}
 }
 .player-frame video,.player-frame iframe{
   position:absolute;inset:0;width:100%;height:100%;border:0;display:block;
-  object-fit:cover;background:#000;
+  object-fit:contain;background:#000;
 }
 .player-frame .embed{position:absolute;inset:0}
 .player-frame .embed > *{width:100%!important;height:100%!important}
@@ -255,6 +255,18 @@ hr.rule{border:0;border-top:1px solid var(--line);margin:0}
 .paused span{width:4.5rem;height:4.5rem;border-radius:50%;display:grid;place-items:center;background:rgba(192,90,107,.92)}
 .pbar{position:absolute;left:0;right:0;bottom:0;height:4px;z-index:3;background:rgba(255,255,255,.14)}
 .pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ember),var(--dawn));transition:width .25s linear}
+.player-tools{
+  position:absolute;right:.75rem;bottom:.75rem;z-index:5;
+  display:flex;gap:.5rem;align-items:center;
+}
+.player-action{
+  width:2.5rem;height:2.5rem;border:1px solid rgba(246,237,233,.22);border-radius:50%;
+  display:grid;place-items:center;background:rgba(0,0,0,.52);color:#fff;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  cursor:pointer;transition:transform .18s ease,background .18s ease,border-color .18s ease;
+}
+.player-action:hover{transform:translateY(-1px);background:rgba(192,90,107,.78);border-color:rgba(246,237,233,.35)}
+.player-action:active{transform:translateY(0) scale(.97)}
 .ph{
   position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:.625rem;padding:1.5rem;text-align:center;color:var(--dim);
@@ -265,6 +277,15 @@ hr.rule{border:0;border-top:1px solid var(--line);margin:0}
 .wait{display:flex;align-items:center;justify-content:center;gap:.625rem;font-size:.875rem;color:var(--dim);text-align:center}
 .pulse{width:.5rem;height:.5rem;border-radius:50%;background:var(--ember);flex:none;animation:pulse 1.8s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+.early-checkout{
+  display:flex;flex-direction:column;gap:.65rem;align-items:center;text-align:center;
+  padding:.95rem 1rem;border-radius:1rem;
+  border:1px solid rgba(224,168,120,.32);
+  background:rgba(224,168,120,.08);
+  animation:gateIn .6s cubic-bezier(.16,1,.3,1);
+}
+.early-checkout .btn{max-width:21rem;min-height:3.2rem;font-size:.98rem}
+.early-checkout p{font-size:.8125rem;color:var(--muted);line-height:1.45}
 .offer-gate{
   display:flex;flex-direction:column;gap:1rem;align-items:center;text-align:center;
   padding:1.35rem 1.2rem;border-radius:1.25rem;
@@ -342,8 +363,6 @@ details[open] summary::after{content:"\2212"}
 details p{padding-bottom:1.0625rem;font-size:.9375rem;color:var(--muted);line-height:1.6}
 
 .foot{border-top:1px solid var(--line);padding-block:1.75rem 7rem;display:flex;flex-direction:column;gap:.875rem}
-.safety{padding:.9375rem 1.0625rem;border-radius:.75rem;background:rgba(36,27,37,.6);border:1px solid var(--line);font-size:.8125rem;line-height:1.55;color:var(--muted)}
-.safety b{color:var(--linen);font-weight:600}
 
 /* ── Barra de compra fixa ───────────────────────────────────── */
 .sticky{
@@ -377,6 +396,8 @@ details p{padding-bottom:1.0625rem;font-size:.9375rem;color:var(--muted);line-he
   .wrap{padding-inline:1rem}
   .screen{gap:1.25rem;padding-block:2rem 3rem}
   .player-frame{width:min(100%,calc(68dvh * .5625));max-height:68dvh;border-radius:1rem}
+  .player-tools{right:.6rem;bottom:.6rem}
+  .player-action{width:2.35rem;height:2.35rem}
   .bar{grid-template-columns:6.2rem 1fr 2.25rem;gap:.55rem;font-size:.75rem}
   .module{grid-template-columns:1fr;gap:.35rem}
   .module-wk{padding-top:0}
@@ -504,11 +525,23 @@ details p{padding-bottom:1.0625rem;font-size:.9375rem;color:var(--muted);line-he
         <div class="paused" id="paused" hidden>
           <span><svg width="28" height="28" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span>
         </div>
+        <div class="player-tools">
+          <button class="player-action" id="fullscreen" type="button" aria-label="Tela cheia" title="Tela cheia">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+          </button>
+        </div>
         <div class="pbar" id="pbar" hidden><i id="pbar-fill"></i></div>
       </div>
     </div>
 
-    <p class="wait" id="vsl-hint"><span class="pulse"></span>Assista até o fim. O próximo botão aparece quando a VSL encerrar.</p>
+    <p class="wait" id="vsl-hint"><span class="pulse"></span>Assista até o fim e prossiga até o que mais almeja!</p>
+    <div class="early-checkout" id="early-checkout" hidden>
+      <p>Se você já entendeu o caminho, pode avançar para ver o guia, o valor e todos os detalhes.</p>
+      <button class="btn" id="early-cta" type="button">
+        Prosseguir para o guia
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
     <button class="link" id="test-unlock" type="button" hidden>Modo teste: simular fim da VSL</button>
 
     <div class="offer-gate" id="offer-gate" hidden>
@@ -566,13 +599,6 @@ details p{padding-bottom:1.0625rem;font-size:.9375rem;color:var(--muted);line-he
     </div>
 
     <footer class="foot">
-      <div class="safety">
-        <b>Um recado honesto.</b> Este guia é material de desenvolvimento pessoal.
-        Não é terapia e não substitui acompanhamento profissional. Se o que você
-        vive envolve agressão, ameaça ou medo de estar em casa, isso não é um
-        padrão a trabalhar sozinha: ligue <b>180</b> (Central de Atendimento à
-        Mulher, gratuito e sigiloso, 24h).
-      </div>
       <p class="fine" id="legal"></p>
     </footer>
   </section>
@@ -619,6 +645,7 @@ const CONFIG = {
     poster: "",   // capa (opcional, só pro .mp4)
     ratio: "9/16" // "9/16" vertical · "16/9" horizontal
   },
+  earlyCheckoutAt: 20,      // segundo em que aparece o botão opcional de prosseguir
   ctaAt: 120,               // fallback em segundos para embeds sem evento de fim
   hideOfferUntilCta: true,  // false = oferta visível desde o início
 
@@ -770,6 +797,7 @@ function toast(msg) {
   toast.t = setTimeout(() => t.classList.remove("on"), 3400);
 }
 const pad = n => String(n).padStart(2, "0");
+const moneyValue = v => Number(String(v || "").replace(/\./g, "").replace(",", "."));
 
 /* ─── Rastreamento ───────────────────────────────────────────── */
 function loadPixel() {
@@ -991,10 +1019,12 @@ function startTimer() {
 let offerReady = false;
 let offerRevealed = false;
 let stickyWatching = false;
+let earlyCheckoutReady = false;
 
 function markOfferReady(reason) {
   if (offerReady || offerRevealed) return;
   offerReady = true;
+  $("early-checkout").hidden = true;
   $("offer-gate").hidden = false;
   $("vsl-hint").hidden = true;
   $("test-unlock").hidden = true;
@@ -1011,14 +1041,22 @@ function revealOffer() {
   applyPricing();
   startTimer();
   $("offer-gate").hidden = true;
+  $("early-checkout").hidden = true;
   $("offer").hidden = false;
   $("vsl-hint").hidden = true;
   $("test-unlock").hidden = true;
   $("sticky").hidden = false;
   watchSticky();
   store.set("bl_offer_revealed", true);
-  track("ViewContent", { content_name: "Oferta", value: Number(currentPrice), currency: "BRL" });
+  track("ViewContent", { content_name: "Oferta", value: moneyValue(currentPrice), currency: "BRL" });
   requestAnimationFrame(() => $("price-box").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }));
+}
+
+function showEarlyCheckout() {
+  if (earlyCheckoutReady || offerReady || offerRevealed) return;
+  earlyCheckoutReady = true;
+  $("early-checkout").hidden = false;
+  track("ViewContent", { content_name: "Prosseguir liberado aos 20s" });
 }
 
 function watchSticky() {
@@ -1042,7 +1080,13 @@ function onBuy(e) {
     toast("O link da Cakto ainda não foi configurado.");
     return;
   }
-  track("InitiateCheckout", { value: Number(currentPrice), currency: "BRL" });
+  track("InitiateCheckout", { value: moneyValue(currentPrice), currency: "BRL" });
+}
+
+function onEarlyCheckout() {
+  store.set("bl_skipped_vsl_after_20s", true);
+  track("ClickButton", { content_name: "Prosseguir para oferta aos 20s" });
+  revealOffer();
 }
 
 /* ─── Player da VSL ──────────────────────────────────────────── */
@@ -1114,6 +1158,21 @@ function showVideoError(frame, v, src) {
   diagnoseVideo(src, $("video-error-detail"));
 }
 
+function openFullscreen(frame, video) {
+  if (video && typeof video.webkitEnterFullscreen === "function") {
+    video.webkitEnterFullscreen();
+    return;
+  }
+  const target = frame;
+  const request = target.requestFullscreen || target.webkitRequestFullscreen || target.msRequestFullscreen;
+  if (request) {
+    request.call(target);
+    track("ClickButton", { content_name: "Tela cheia VSL" });
+  } else {
+    toast("Tela cheia não está disponível neste navegador.");
+  }
+}
+
 function mountPlayer() {
   if (mounted) return;
   mounted = true;
@@ -1157,8 +1216,14 @@ function mountPlayer() {
       track("ClickButton", { content_name: "VSL com som" });
     });
 
+    $("fullscreen").addEventListener("click", e => {
+      e.stopPropagation();
+      openFullscreen(frame, v);
+    });
+
     frame.addEventListener("click", e => {
       if (!um.hidden || e.target.closest(".unmute")) return;
+      if (e.target.closest(".player-action")) return;
       if (v.paused) { v.play(); $("paused").hidden = true; }
       else { v.pause(); $("paused").hidden = false; }
     });
@@ -1166,6 +1231,7 @@ function mountPlayer() {
     $("pbar").hidden = false;
     v.addEventListener("timeupdate", () => {
       if (v.duration) $("pbar-fill").style.width = `${(v.currentTime / v.duration) * 100}%`;
+      if (v.currentTime >= CONFIG.earlyCheckoutAt) showEarlyCheckout();
     });
     v.addEventListener("ended", () => markOfferReady("ended"));
     v.addEventListener("error", () => showVideoError(frame, v, mp4));
@@ -1177,6 +1243,11 @@ function mountPlayer() {
     box.innerHTML = iframe;
     frame.prepend(box);
     runScripts(box);
+    $("fullscreen").addEventListener("click", e => {
+      e.stopPropagation();
+      openFullscreen(frame, null);
+    });
+    setTimeout(showEarlyCheckout, Math.max(0, CONFIG.earlyCheckoutAt) * 1000);
     markReadyByClock();
   } else {
     frame.insertAdjacentHTML("afterbegin",
@@ -1248,9 +1319,7 @@ function buildStatic() {
   }
 
   $("legal").textContent =
-    `${CONFIG.brand} · Material digital de desenvolvimento pessoal. ` +
-    `Resultados variam de pessoa para pessoa e dependem da sua aplicação. ` +
-    `Esta página não é afiliada ao TikTok.`;
+    `Bianca Leao - Material digital de desenvolvimento pessoal.`;
 
   applyPricing();
 }
@@ -1266,6 +1335,7 @@ $("resume").addEventListener("click", () => {
   if (s && PROFILES[s.key]) renderResult(s);
 });
 ["cta", "cta-2", "sticky-cta"].forEach(id => $(id).addEventListener("click", onBuy));
+$("early-cta").addEventListener("click", onEarlyCheckout);
 
 buildStatic();
 loadPixel();
