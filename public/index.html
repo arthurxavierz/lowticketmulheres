@@ -321,7 +321,7 @@ details{border-bottom:1px solid var(--line)}
 summary{padding:1.0625rem 2rem 1.0625rem 0;cursor:pointer;list-style:none;position:relative;font-weight:500;font-size:.9375rem;line-height:1.45}
 summary::-webkit-details-marker{display:none}
 summary::after{content:"+";position:absolute;right:.25rem;top:50%;transform:translateY(-50%);color:var(--ember);font-size:1.25rem;line-height:1}
-details[open] summary::after{content:"–"}
+details[open] summary::after{content:"\2212"}
 details p{padding-bottom:1.0625rem;font-size:.9375rem;color:var(--muted);line-height:1.6}
 
 .foot{border-top:1px solid var(--line);padding-block:1.75rem 7rem;display:flex;flex-direction:column;gap:.875rem}
@@ -382,13 +382,13 @@ details p{padding-bottom:1.0625rem;font-size:.9375rem;color:var(--muted);line-he
     <p class="eyebrow">Quiz gratuito · 2 minutos</p>
     <h1>Por que você continua num lugar onde precisa <em>implorar</em> pra ser vista?</h1>
     <p class="lede">
-      Não é falta de amor. É um padrão — e ele tem nome. Sete perguntas pra
+      Não é falta de amor. É um padrão, e ele tem nome. Sete perguntas pra
       você enxergar qual é o seu.
     </p>
     <div class="intro-points">
-      <div class="intro-point"><span class="tick">—</span><span>Não tem resposta certa. <b>Tem resposta sua.</b></span></div>
-      <div class="intro-point"><span class="tick">—</span><span>Suas respostas <b>não são enviadas pra ninguém.</b> Ficam só no seu celular.</span></div>
-      <div class="intro-point"><span class="tick">—</span><span>No fim, você recebe a <b>leitura do seu perfil</b> e o que fazer com ela.</span></div>
+      <div class="intro-point"><span class="tick">◆</span><span>Não tem resposta certa. <b>Tem resposta sua.</b></span></div>
+      <div class="intro-point"><span class="tick">◆</span><span>Suas respostas <b>não são enviadas pra ninguém.</b> Ficam só no seu celular.</span></div>
+      <div class="intro-point"><span class="tick">◆</span><span>No fim, você recebe a <b>leitura do seu perfil</b> e o que fazer com ela.</span></div>
     </div>
     <button class="btn" id="start" type="button">
       Descobrir o meu padrão
@@ -479,7 +479,7 @@ details p{padding-bottom:1.0625rem;font-size:.9375rem;color:var(--muted);line-he
       </div>
     </div>
 
-    <p class="wait" id="vsl-hint"><span class="pulse"></span>Assista até o fim — o acesso ao guia aparece durante o vídeo.</p>
+    <p class="wait" id="vsl-hint"><span class="pulse"></span>Assista até o fim. O acesso ao guia aparece durante o vídeo.</p>
     <button class="link" id="test-unlock" type="button" hidden>Modo teste: liberar a oferta agora</button>
 
     <div class="offer" id="offer" hidden>
@@ -528,8 +528,8 @@ details p{padding-bottom:1.0625rem;font-size:.9375rem;color:var(--muted);line-he
 
     <footer class="foot">
       <div class="safety">
-        <b>Um recado honesto.</b> Este guia é material de desenvolvimento pessoal —
-        não é terapia e não substitui acompanhamento profissional. Se o que você
+        <b>Um recado honesto.</b> Este guia é material de desenvolvimento pessoal.
+        Não é terapia e não substitui acompanhamento profissional. Se o que você
         vive envolve agressão, ameaça ou medo de estar em casa, isso não é um
         padrão a trabalhar sozinha: ligue <b>180</b> (Central de Atendimento à
         Mulher, gratuito e sigiloso, 24h).
@@ -554,19 +554,19 @@ details p{padding-bottom:1.0625rem;font-size:.9375rem;color:var(--muted);line-he
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   CONFIGURAÇÃO — só mexa aqui
+   CONFIGURAÇÃO · só mexa aqui
    ═══════════════════════════════════════════════════════════════ */
 const CONFIG = {
   brand: "Bianca Leão",
 
   // ─── Oferta ───────────────────────────────────────────────────
-  checkoutUrl: "https://pay.cakto.com.br/SEU-LINK-AQUI",  // link da Cakto
+  checkoutUrl: "https://pay.cakto.com.br/3bdbcsx_946713",  // link da Cakto
   price: "47",
   payNote: "Pagamento único · Pix ou cartão",
 
   // ─── Cronômetro (opcional, e só se for REAL) ──────────────────
   // Ele só aparece se você preencher os dois campos abaixo. Quando zera,
-  // o botão passa de verdade pro link do preço cheio — e continua assim
+  // o botão passa de verdade pro link do preço cheio, e continua assim
   // mesmo se ela recarregar a página. Crie as duas ofertas na Cakto.
   // Cronômetro que zera e não muda nada é propaganda enganosa (CDC art. 37).
   fullPrice: "",          // ex.: "97"
@@ -575,7 +575,7 @@ const CONFIG = {
 
   // ─── VSL (preencha UM dos dois) ───────────────────────────────
   vsl: {
-    mp4: "",      // link direto do .mp4 (R2 / Bunny) — autoplay + "toque pra ouvir"
+    mp4: "",      // link direto do .mp4 (R2 / Bunny). Autoplay + "toque pra ouvir"
     iframe: "",   // OU o código de embed inteiro do Panda / VTurb / Bunny
     poster: "",   // capa (opcional, só pro .mp4)
     ratio: "9/16" // "9/16" vertical · "16/9" horizontal
@@ -609,9 +609,9 @@ const QUESTIONS = [
     ["Quase todo dia. Eu preciso saber.", {vigia:3}],
     ["Quando alguma coisa me dá um nó no estômago", {vigia:2}],
     ["Já fiz muito. Hoje evito, porque me destrói.", {vigia:1, acorda:2}],
-    ["Não confiro — mas também não me sinto segura", {insiste:2}],
+    ["Não confiro, mas também não me sinto segura", {insiste:2}],
   ]},
-  { q: "Quando você pede algo pra você — tempo, atenção, carinho — como se sente?", o: [
+  { q: "Quando você pede algo pra você, seja tempo, atenção ou carinho, como se sente?", o: [
     ["Culpada, como se estivesse pedindo demais", {anula:3}],
     ["Com medo da resposta dele", {vigia:2, anula:1}],
     ["Cansada de ter que pedir toda vez", {insiste:3}],
@@ -637,7 +637,7 @@ const QUESTIONS = [
   ]},
   { q: "Se daqui a 6 meses estivesse tudo exatamente igual, o que você faria?", o: [
     ["Continuaria. Não sei viver de outro jeito.", {anula:3}],
-    ["Não sei — e é isso que me assusta", {vigia:2, anula:1}],
+    ["Não sei, e é isso que me assusta", {vigia:2, anula:1}],
     ["Eu não aguentaria. Mas não sei o primeiro passo.", {acorda:2, insiste:1}],
     ["Eu já decidi que não vou seguir assim", {acorda:3}],
   ]},
@@ -649,68 +649,68 @@ const PROFILES = {
   anula: {
     name: "A que aprendeu a ocupar pouco espaço",
     line: "Você virou fácil de conviver. E foi ficando invisível.",
-    b1: "Em algum momento você entendeu — sem ninguém te ensinar em voz alta — que ser leve, não dar trabalho e não cobrar era o jeito de continuar sendo amada. Então você foi diminuindo. Um pedido a menos aqui, uma vontade engolida ali.",
+    b1: "Em algum momento você entendeu, sem ninguém te ensinar em voz alta, que ser leve, não dar trabalho e não cobrar era o jeito de continuar sendo amada. Então você foi diminuindo. Um pedido a menos aqui, uma vontade engolida ali.",
     b2: "O problema é que ninguém valoriza o que não custa nada. Quanto menos você pede, menos ele percebe que existe algo a perder. Não é que ele parou de te amar: é que você parou de aparecer.",
     costs: [
       "Você pede desculpa por coisas que não fez, só pra encerrar o assunto",
-      "Você já não sabe dizer o que quer — só o que ele não quer",
+      "Você já não sabe dizer o que quer, só o que ele não quer",
       "Você chama de paz o que na verdade é silêncio",
     ],
-    pivot: "A virada não é brigar mais. É voltar a ocupar espaço sem pedir licença — e é exatamente isso que muda o jeito como ele te enxerga.",
-    next: "Como voltar a ocupar espaço — sem precisar brigar por ele",
+    pivot: "A virada não é brigar mais. É voltar a ocupar espaço sem pedir licença. É exatamente isso que muda o jeito como ele te enxerga.",
+    next: "Como voltar a ocupar espaço sem precisar brigar por ele",
   },
   vigia: {
     name: "A que não consegue desligar a cabeça",
     line: "Você não está com ciúme. Você está exausta.",
-    b1: "Você já decorou o horário que ele costuma responder. Já sabe reconhecer o tipo de silêncio dele. Já conferiu coisas que preferia não ter conferido. E a cada vez que você procura, encontra algo que alimenta o ciclo — mesmo quando não tem nada.",
+    b1: "Você já decorou o horário que ele costuma responder. Já sabe reconhecer o tipo de silêncio dele. Já conferiu coisas que preferia não ter conferido. E a cada vez que você procura, encontra algo que alimenta o ciclo, mesmo quando não tem nada.",
     b2: "Isso não é desconfiança à toa: é o seu corpo tentando prever a próxima dor pra não ser pega de surpresa de novo. Só que vigiar nunca trouxe segurança pra ninguém. Só trouxe cansaço.",
     costs: [
       "Sua energia vai embora numa investigação que nunca termina",
       "Você está presente no corpo, mas a cabeça fica no celular dele",
       "Você virou detetive da vida dele e perdeu o rumo da sua",
     ],
-    pivot: "A segurança que você procura no celular dele não está lá. Ela se constrói em outro lugar — e sem ela, nenhuma prova que ele der vai ser suficiente.",
+    pivot: "A segurança que você procura no celular dele não está lá. Ela se constrói em outro lugar, e sem ela nenhuma prova que ele der vai ser suficiente.",
     next: "Como desligar o modo alerta e voltar a sentir segurança",
   },
   insiste: {
     name: "A que carrega o relacionamento sozinha",
     line: "Você virou a única adulta da relação.",
-    b1: "Você lembra das datas, resolve os problemas, puxa as conversas difíceis, segura a casa e ainda tem energia pra tentar consertar o clima quando ele chega mal. Você faz a parte dele e a sua — e chama isso de amor.",
+    b1: "Você lembra das datas, resolve os problemas, puxa as conversas difíceis, segura a casa e ainda tem energia pra tentar consertar o clima quando ele chega mal. Você faz a parte dele e a sua, e chama isso de amor.",
     b2: "Só que quem carrega tudo sozinha cria alguém que não precisa carregar nada. Você não está construindo um casamento: está sustentando um. E por baixo do cansaço tem um ressentimento que você ainda não deixou virar palavra.",
     costs: [
-      "Você se sente mãe dele, e mãe não deseja — mãe cuida",
+      "Você se sente mãe dele, e mãe não deseja. Mãe cuida.",
       "Você faz mais e recebe menos, e ainda acha que é falta de esforço seu",
-      "Quando você para, tudo desmonta — e isso te prende",
+      "Quando você para, tudo desmonta, e isso te prende",
     ],
-    pivot: "Parar de carregar não é desistir. É devolver o peso pra quem também deveria estar segurando — e descobrir o que sobra de você quando você para de se esfolar.",
+    pivot: "Parar de carregar não é desistir. É devolver o peso pra quem também deveria estar segurando, e descobrir o que sobra de você quando você para de se esfolar.",
     next: "Como parar de carregar a relação sozinha sem tudo desabar",
   },
   acorda: {
     name: "A que já sabe, e está na beirada",
     line: "Você não precisa de mais um sinal. Você já teve todos.",
     b1: "Diferente de muita mulher que chega aqui, você já enxergou. Já entendeu que ficar esperando ele mudar é uma espera sem prazo. Já sentiu aquele cansaço específico de quem cansou de explicar a mesma coisa.",
-    b2: "O que trava você agora não é falta de clareza — é falta de método. Você sabe que precisa se reposicionar, mas não sabe qual é o primeiro passo na segunda-feira de manhã, com as contas, os filhos e ele dormindo do lado.",
+    b2: "O que trava você agora não é falta de clareza. É falta de método. Você sabe que precisa se reposicionar, mas não sabe qual é o primeiro passo na segunda-feira de manhã, com as contas, os filhos e ele dormindo do lado.",
     costs: [
       "Você entende tudo, mas os dias continuam exatamente iguais",
       "A clareza sem plano vira só uma angústia mais informada",
       "Cada mês que passa, você se acostuma um pouco mais",
     ],
-    pivot: "Você não precisa ser convencida. Precisa de um caminho com dia, hora e primeiro passo — porque entender já não está te tirando do lugar.",
+    pivot: "Você não precisa ser convencida. Precisa de um caminho com dia, hora e primeiro passo, porque entender já não está te tirando do lugar.",
     next: "O primeiro passo concreto pra sair de onde você está",
   },
 };
 
 // Troque pelos módulos reais do seu guia.
 const MODULES = [
-  ["Semana 1", "Parar de sangrar", "Os três hábitos que mantêm você presa no ciclo — e como interromper cada um sem dar um ultimato que você não vai cumprir."],
+  ["Semana 1", "Parar de sangrar", "Os três hábitos que mantêm você presa no ciclo, e como interromper cada um sem dar um ultimato que você não vai cumprir."],
   ["Semana 2", "Devolver o peso", "O que é seu, o que é dele e o que vocês dois largaram no meio. Como parar de fazer a parte dele sem a casa desabar."],
-  ["Semana 3", "Reocupar espaço", "Voltar a ter vontade, opinião e agenda própria. É aqui que você começa a ser tratada diferente — porque você está diferente."],
+  ["Semana 3", "Reocupar espaço", "Voltar a ter vontade, opinião e agenda própria. É aqui que você começa a ser tratada diferente, porque você está diferente."],
   ["Semana 4", "Decidir de pé", "Com a cabeça no lugar, você escolhe: reconstruir ou sair. As duas decisões são válidas. Nenhuma se toma do chão do banheiro."],
 ];
 
 const FAQ = [
-  ["Isso é terapia?", "Não. É um guia prático de 30 dias, com exercícios pra você fazer sozinha. Ele não substitui terapia — e se você já faz, os dois funcionam bem juntos."],
-  ["Funciona mesmo se ele não mudar?", "O trabalho aqui é sobre você: sua clareza, seus limites, seu lugar. Muita mulher percebe o parceiro mudando quando ela muda — mas isso é consequência, não promessa. O que o guia entrega é você sair do chão, com ele ou sem ele."],
+  ["Isso é terapia?", "Não. É um guia prático de 30 dias, com exercícios pra você fazer sozinha. Ele não substitui terapia. Se você já faz, os dois funcionam bem juntos."],
+  ["Funciona mesmo se ele não mudar?", "O trabalho aqui é sobre você: sua clareza, seus limites, seu lugar. Muita mulher percebe o parceiro mudando quando ela muda, mas isso é consequência, não promessa. O que o guia entrega é você sair do chão, com ele ou sem ele."],
   ["Quanto tempo eu preciso por dia?", "Cerca de 15 minutos. É feito pra caber num dia real, com trabalho, casa e filhos."],
   ["Como eu recebo?", "Assim que o pagamento é confirmado, o acesso chega no seu e-mail. É digital, abre no celular e fica com você."],
   ["E se não for pra mim?", "Você tem 7 dias pra pedir o reembolso integral, direto pela plataforma de pagamento. Sem precisar justificar."],
