@@ -44,6 +44,7 @@ body{
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
+body.player-expanded{overflow:hidden}
 
 /* A assinatura: o fundo vai da madrugada ao amanhecer conforme ela avança (--p) */
 body::before{
@@ -218,6 +219,19 @@ hr.rule{border:0;border-top:1px solid var(--line);margin:0}
   background:#0E0A0E;border:1px solid var(--line-2);
   box-shadow:0 0 0 5px rgba(46,35,48,.6),0 2rem 3rem -1.5rem rgba(0,0,0,.9);
 }
+.player-frame.is-expanded{
+  position:fixed;
+  inset:0;
+  z-index:60;
+  width:100dvw!important;
+  height:100dvh;
+  max-height:none;
+  aspect-ratio:auto;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  background:#000;
+}
 .player-frame video,.player-frame iframe{
   position:absolute;inset:0;width:100%;height:100%;border:0;display:block;
   object-fit:contain;background:#000;
@@ -267,6 +281,8 @@ hr.rule{border:0;border-top:1px solid var(--line);margin:0}
 }
 .player-action:hover{transform:translateY(-1px);background:rgba(192,90,107,.78);border-color:rgba(246,237,233,.35)}
 .player-action:active{transform:translateY(0) scale(.97)}
+.player-frame.is-expanded .player-tools{right:1rem;bottom:1rem}
+.player-frame.is-expanded .player-action{width:2.85rem;height:2.85rem;background:rgba(20,14,19,.72)}
 .ph{
   position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:.625rem;padding:1.5rem;text-align:center;color:var(--dim);
@@ -1158,20 +1174,32 @@ function showVideoError(frame, v, src) {
   diagnoseVideo(src, $("video-error-detail"));
 }
 
-function openFullscreen(frame, video) {
-  if (video && typeof video.webkitEnterFullscreen === "function") {
-    video.webkitEnterFullscreen();
+let playerScrollY = 0;
+
+function togglePlayerExpanded(frame, force) {
+  const expand = typeof force === "boolean" ? force : !frame.classList.contains("is-expanded");
+  const btn = $("fullscreen");
+  if (expand) {
+    playerScrollY = window.scrollY || 0;
+    frame.classList.add("is-expanded");
+    document.body.classList.add("player-expanded");
+    btn.setAttribute("aria-label", "Sair da tela cheia");
+    btn.title = "Sair da tela cheia";
+    track("ClickButton", { content_name: "Tela cheia VSL" });
     return;
   }
-  const target = frame;
-  const request = target.requestFullscreen || target.webkitRequestFullscreen || target.msRequestFullscreen;
-  if (request) {
-    request.call(target);
-    track("ClickButton", { content_name: "Tela cheia VSL" });
-  } else {
-    toast("Tela cheia não está disponível neste navegador.");
-  }
+  frame.classList.remove("is-expanded");
+  document.body.classList.remove("player-expanded");
+  btn.setAttribute("aria-label", "Tela cheia");
+  btn.title = "Tela cheia";
+  requestAnimationFrame(() => window.scrollTo(0, playerScrollY));
 }
+
+document.addEventListener("keydown", e => {
+  if (e.key !== "Escape") return;
+  const frame = $("player-frame");
+  if (frame && frame.classList.contains("is-expanded")) togglePlayerExpanded(frame, false);
+});
 
 function mountPlayer() {
   if (mounted) return;
@@ -1218,7 +1246,7 @@ function mountPlayer() {
 
     $("fullscreen").addEventListener("click", e => {
       e.stopPropagation();
-      openFullscreen(frame, v);
+      togglePlayerExpanded(frame);
     });
 
     frame.addEventListener("click", e => {
@@ -1245,7 +1273,7 @@ function mountPlayer() {
     runScripts(box);
     $("fullscreen").addEventListener("click", e => {
       e.stopPropagation();
-      openFullscreen(frame, null);
+      togglePlayerExpanded(frame);
     });
     setTimeout(showEarlyCheckout, Math.max(0, CONFIG.earlyCheckoutAt) * 1000);
     markReadyByClock();
